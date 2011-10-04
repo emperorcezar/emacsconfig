@@ -1,26 +1,19 @@
+;; set load-path to site-lisp
+(setq load-path (cons "~/.emacs.d" load-path))
+
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+
 (set-default-font "DejaVu Sans Mono-10")
 (global-font-lock-mode 1)
 
-;; set load-path to site-lisp
-(setq load-path (cons "~/.emacs.d/site-lisp" load-path))
-(setq load-path (cons "~/.emacs.d/site-lisp/tuareg-mode-1.45.6" load-path))
-(setq load-path (cons "~/.emacs.d" load-path))
-
-;; set load-path for color-theme
-(setq load-path (cons "~/.emacs.d/color-theme-6.6.0" load-path))
-
-(require 'package)
-
 (require 'color-theme)
-(color-theme-initialize)
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
 
 ;;(color-theme-midnight)
 
 
-
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 
 ;; ========== completion ==========
@@ -132,15 +125,3 @@
   (global-set-key (kbd "<mouse-4>") 'sd-mousewheel-scroll-down)
 
 (xterm-mouse-mode)
-
-
-
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
