@@ -132,3 +132,6 @@
 
 (if (file-exists-p per-machine-config-file)
     (load per-machine-config-file))
+(if (window-system) nil
+  (color-theme-github)
+    )
