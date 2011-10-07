@@ -4,6 +4,8 @@
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
+(package-initialize)
+
 (set-default-font "DejaVu Sans Mono-10")
 (global-font-lock-mode 1)
 
