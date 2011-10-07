@@ -11,11 +11,6 @@
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
 
-;;(color-theme-midnight)
-
-
-
-
 ;; ========== completion ==========
 
 (require 'completion)
@@ -125,3 +120,13 @@
   (global-set-key (kbd "<mouse-4>") 'sd-mousewheel-scroll-down)
 
 (xterm-mouse-mode)
+
+(setq dotfiles-dir (file-name-directory (or (buffer-file-name) load-file-name)))
+
+(setq custom-file (concat dotfiles-dir "custom/" system-name ".el"))
+(setq per-machine-config-file (concat dotfiles-dir "config/per-machine/" system-name ".el"))
+
+(load custom-file 'noerror)
+
+(if (file-exists-p per-machine-config-file)
+    (load per-machine-config-file))
