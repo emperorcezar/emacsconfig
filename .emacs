@@ -6,7 +6,7 @@
 
 (package-initialize)
 
-(set-default-font "DejaVu Sans Mono-10")
+(set-default-font "DejaVu Sans Mono-11")
 (global-font-lock-mode 1)
 
 (require 'color-theme)
