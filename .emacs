@@ -80,8 +80,8 @@
 
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
 
-(setq tab-width 4)
-(setq indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
 
 ;;; for Aquamacs Emacs, they set some keys in
 ;;; the osx-key-mode-map, and make it a more
