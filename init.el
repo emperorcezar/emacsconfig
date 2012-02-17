@@ -142,3 +142,5 @@
 
 ;; load buffer revert
 (load "revbufs.el")
+
+(global-set-key (kbd "A-r") 'revbufs)
