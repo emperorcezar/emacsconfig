@@ -6,12 +6,16 @@
 
 (package-initialize)
 
-(set-default-font "DejaVu Sans Mono-11")
+(set-default-font "DejaVu Sans Mono-14")
 (global-font-lock-mode 1)
 
 (require 'color-theme)
 (require 'color-theme-zenburn)
 (color-theme-zenburn)
+
+;; less mode
+
+(load "less-css-mode.el")
 
 ;; ========== completion ==========
 
@@ -26,7 +30,6 @@
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
-
 
 (setq make-backup-files nil) 
 
@@ -136,3 +139,6 @@
   (require 'color-theme-tangotango)
   (color-theme-tangotango)
   )
+
+;; load buffer revert
+(load "revbufs.el")
