@@ -10,8 +10,8 @@
 (global-font-lock-mode 1)
 
 (require 'color-theme)
-(require 'color-theme-zenburn)
-(color-theme-zenburn)
+;; (require 'color-theme-zenburn)
+;; (color-theme-zenburn)
 
 ;; less mode
 
@@ -24,6 +24,9 @@
 ;; ;; javascript
 ;; (autoload 'js2-mode "js2-mode" nil t)
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+
+(setq package-user-dir "~/.emacs.d/elpa")
 
 ;; recent files 
 (require 'recentf)
@@ -128,13 +131,13 @@
 
 (setq dotfiles-dir (file-name-directory (or (buffer-file-name) load-file-name)))
 
-(setq custom-file (concat dotfiles-dir "custom/" system-name ".el"))
-(setq per-machine-config-file (concat dotfiles-dir "config/per-machine/" system-name ".el"))
+;; (setq custom-file (concat dotfiles-dir "custom/" system-name ".el"))
+;; (setq per-machine-config-file (concat dotfiles-dir "config/per-machine/" system-name ".el"))
 
-(load custom-file 'noerror)
+;; (load custom-file 'noerror)
 
-(if (file-exists-p per-machine-config-file)
-    (load per-machine-config-file))
+;; (if (file-exists-p per-machine-config-file)
+;;     (load per-machine-config-file))
 (if (window-system) nil
   (require 'color-theme-tangotango)
   (color-theme-tangotango)
@@ -144,3 +147,24 @@
 (load "revbufs.el")
 
 (global-set-key (kbd "A-r") 'revbufs)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(aquamacs-additional-fontsets nil t)
+ '(aquamacs-customization-version-id 300 t)
+ '(aquamacs-tool-bar-user-customization (quote ((60474182 new-file open-file recent-files save-buffer aquamacs-print nil undo redo cut copy paste isearch-forward nil customize help))) t)
+ '(column-number-mode nil)
+ '(global-hl-line-mode t)
+ '(global-linum-mode t)
+ '(ns-tool-bar-display-mode (quote labels) t)
+ '(ns-tool-bar-size-mode (quote small) t)
+ '(visual-line-mode nil t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
