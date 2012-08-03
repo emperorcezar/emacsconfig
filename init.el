@@ -2,16 +2,25 @@
 (setq load-path (cons "~/.emacs.d" load-path))
 
 (require 'package)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (package-initialize)
 
-(set-default-font "DejaVu Sans Mono-14")
+(set-default-font "Inconsolata-16")
 (global-font-lock-mode 1)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(autoload 'ibuffer "ibuffer" "List buffers." t)
+
 (require 'color-theme)
-;; (require 'color-theme-zenburn)
-;; (color-theme-zenburn)
+
+;; ido
+(require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(setq ido-file-extensions-order '(".py" ".html" ".emacs"))
+(ido-mode 1)
+
 
 ;; less mode
 
@@ -44,9 +53,6 @@
 (setq auto-save-default nil)
 (setq load-path (append load-path (list "/home/cezar/.emacs.d")))
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(autoload 'ibuffer "ibuffer" "List buffers." t)
-
 (defun copy-line ()
   "Copy current line in the kill ring"
   (interactive)
@@ -56,24 +62,26 @@
 
 (global-set-key (kbd "C-x l") 'copy-line)
 
-;; python settings
-(add-hook 'python-mode-hook 
-      (lambda ()
-	(local-set-key [(control ?<)] 'python-shift-left)
-	(local-set-key [(control ?>)] 'python-shift-right)))
-
-
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(aquamacs-additional-fontsets nil t)
+ '(aquamacs-customization-version-id 300 t)
+ '(aquamacs-tool-bar-user-customization (quote ((60474182 new-file open-file recent-files save-buffer aquamacs-print nil undo redo cut copy paste isearch-forward nil customize help))) t)
+ '(column-number-mode nil)
+ '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
+ '(global-hl-line-mode t)
+ '(global-linum-mode t)
+ '(ns-tool-bar-display-mode (quote labels) t)
+ '(ns-tool-bar-size-mode (quote small) t)
+ '(visual-line-mode nil t))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 (require 'uniquify)
@@ -84,7 +92,12 @@
 (global-set-key (kbd "M-[ 5 d") 'backward-word)
 (global-set-key (kbd "M-[ 5 c") 'forward-word)
 
+(global-set-key (kbd "<s-left>") 'beginning-of-line)
+(global-set-key (kbd "<s-right>") 'end-of-line)
+
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
+
+(add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
 
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
@@ -138,33 +151,89 @@
 
 ;; (if (file-exists-p per-machine-config-file)
 ;;     (load per-machine-config-file))
-(if (window-system) nil
-  (require 'color-theme-tangotango)
-  (color-theme-tangotango)
-  )
 
 ;; load buffer revert
 (load "revbufs.el")
 
 (global-set-key (kbd "A-r") 'revbufs)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(aquamacs-additional-fontsets nil t)
- '(aquamacs-customization-version-id 300 t)
- '(aquamacs-tool-bar-user-customization (quote ((60474182 new-file open-file recent-files save-buffer aquamacs-print nil undo redo cut copy paste isearch-forward nil customize help))) t)
- '(column-number-mode nil)
- '(global-hl-line-mode t)
- '(global-linum-mode t)
- '(ns-tool-bar-display-mode (quote labels) t)
- '(ns-tool-bar-size-mode (quote small) t)
- '(visual-line-mode nil t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+ '(aquamacs-autoface-mode nil)
+
+
+
+
+(setq default-frame-alist
+      '((cursor-type . box)
+        (vertical-scroll-bars . right)
+        (internal-border-width . 0)
+        (modeline . t)
+        (fringe)
+        (mouse-color . "black")
+        (cursor-color . "Red")
+        (background-mode . light)
+        (tool-bar-lines . 1)
+        (menu-bar-lines . 1)
+        (right-fringe . 12)
+        (left-fringe . 4)
+        (background-color . "#fcf4dc")
+        (foreground-color . "Black")
+        (font . "-apple-Inconsolata-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+        (fontsize . 0)
+        (font-backend ns)
+        )
+      )
+
+(add-to-list 'load-path "~/.emacs.d/src/emacs-color-theme-solarized/")
+(add-to-list 'custom-theme-load-path
+             "~/.emacs.d/src/emacs-color-theme-solarized")
+
+;(load-theme 'solarized-light t)
+
+;; (if (window-system) nil
+;;   (load-theme 'solarized-dark t)
+;;   )
+
+;; Go mode
+(load "go-mode.el")
+
+;; yaml mode
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+(add-hook 'yaml-mode-hook
+     '(lambda ()
+        (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+(setq mac-option-modifier 'meta)
+
+
+(add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
+
+(load-file "~/.emacs.d/emacs-for-python/epy-init.el") (require 'epy-setup)      ;; It will setup other loads, it is required!
+(require 'epy-python)     ;; If you want the python facilities [optional]
+(require 'epy-completion) ;; If you want the autocompletion settings [optional]
+(require 'epy-editing)    ;; For configurations related to editing [optional]
+(require 'epy-bindings)   ;; For my suggested keybindings [optional]
+(require 'epy-nose)       ;; For nose integration
+(require 'highlight-indentation)
+(epy-django-snippets)
+
+(add-hook 'python-mode-hook 'highlight-indentation)
+(add-hook 'python-mode-hook
+          (lambda () (define-key python-mode-map "\C-m" 'newline-and-indent))) ;;Newline and enter
+
+(add-hook 'ruby-mode-hook 'highlight-indentation)
+
+
+
+(add-to-list 'load-path "~/.emacs.d/magit/") ;; tell where to load the various files
+(require 'magit)
+
+(tool-bar-mode -1)
+(setq-default cursor-type 'bar) 
+
+(setq ring-bell-function 'ignore)
+
+(server-start)
+
