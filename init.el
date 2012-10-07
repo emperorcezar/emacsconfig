@@ -6,7 +6,7 @@
 
 (package-initialize)
 
-(set-default-font "Inconsolata-16")
+(set-default-font "Source Code Pro-14")
 (global-font-lock-mode 1)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -61,28 +61,6 @@
   (message "Line copied"))
 
 (global-set-key (kbd "C-x l") 'copy-line)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(aquamacs-additional-fontsets nil t)
- '(aquamacs-customization-version-id 300 t)
- '(aquamacs-tool-bar-user-customization (quote ((60474182 new-file open-file recent-files save-buffer aquamacs-print nil undo redo cut copy paste isearch-forward nil customize help))) t)
- '(column-number-mode nil)
- '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
- '(global-hl-line-mode t)
- '(global-linum-mode t)
- '(ns-tool-bar-display-mode (quote labels) t)
- '(ns-tool-bar-size-mode (quote small) t)
- '(visual-line-mode nil t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
@@ -158,11 +136,6 @@
 (global-set-key (kbd "A-r") 'revbufs)
 
 
- '(aquamacs-autoface-mode nil)
-
-
-
-
 (setq default-frame-alist
       '((cursor-type . box)
         (vertical-scroll-bars . right)
@@ -178,8 +151,6 @@
         (left-fringe . 4)
         (background-color . "#fcf4dc")
         (foreground-color . "Black")
-        (font . "-apple-Inconsolata-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-        (fontsize . 0)
         (font-backend ns)
         )
       )
@@ -237,3 +208,5 @@
 
 (server-start)
 
+(add-to-list 'load-path "~/.emacs.d/pony-mode/")
+(require 'pony-mode)
