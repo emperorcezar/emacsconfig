@@ -210,3 +210,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/pony-mode/")
 (require 'pony-mode)
+
+;; Make unicode work in the terminal
+(defadvice ansi-term (after advise-ansi-term-coding-system)
+    (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
+(ad-activate 'ansi-term)
