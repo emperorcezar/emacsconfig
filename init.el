@@ -215,3 +215,17 @@
 (defadvice ansi-term (after advise-ansi-term-coding-system)
     (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
 (ad-activate 'ansi-term)
+
+;; Better window switching
+(defun select-next-window ()
+  "Switch to the next window" 
+  (interactive)
+  (select-window (next-window)))
+
+(defun select-previous-window ()
+  "Switch to the previous window" 
+  (interactive)
+  (select-window (previous-window)))
+
+(global-set-key (kbd "s-]") 'select-next-window)
+(global-set-key (kbd "s-[")  'select-previous-window)
