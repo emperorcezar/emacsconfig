@@ -4,6 +4,7 @@
 (add-to-list 'load-path "~/.emacs.d/magit/") ;; tell where to load the various files
 (add-to-list 'load-path "~/.emacs.d/pony-mode/")
 (add-to-list 'load-path "~/.emacs.d/multi-term/")
+(add-to-list 'load-path "~/.emacs.d/sr-speedbar/")
 
 ;; Setup Melpa Package Archive
 (require 'package)
@@ -181,3 +182,8 @@
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+;; Add the speed bar
+(require 'sr-speedbar)
+(setq 'sr-speedbar-right-side nil)
+(global-set-key (kbd "s-s") 'sr-speedbar-toggle)
