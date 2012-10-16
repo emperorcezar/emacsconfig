@@ -1,18 +1,23 @@
 ;; set load-path to site-lisp
 (setq load-path (cons "~/.emacs.d" load-path))
+(add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
+(add-to-list 'load-path "~/.emacs.d/magit/") ;; tell where to load the various files
+(add-to-list 'load-path "~/.emacs.d/pony-mode/")
+(add-to-list 'load-path "~/.emacs.d/multi-term/")
 
+;; Setup Melpa Package Archive
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-
 (package-initialize)
+(setq package-user-dir "~/.emacs.d/elpa")
 
+;; Set our prefered font
 (set-default-font "Source Code Pro-14")
 (global-font-lock-mode 1)
 
+;; ibuffer is a much better buffer switcher
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
-
-(require 'color-theme)
 
 ;; ido
 (require 'ido)
@@ -23,19 +28,10 @@
 
 
 ;; less mode
-
 (load "less-css-mode.el")
 
-;; ========== completion ==========
-
+;; Completion
 (require 'completion)
-
-;; ;; javascript
-;; (autoload 'js2-mode "js2-mode" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-
-(setq package-user-dir "~/.emacs.d/elpa")
 
 ;; recent files 
 (require 'recentf)
@@ -43,25 +39,20 @@
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
-(setq make-backup-files nil) 
-
-;;disable splash screen and startup message
+;; Disable splash screen and startup message
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
-;disable auto save
-(setq auto-save-default nil)
-(setq load-path (append load-path (list "/home/cezar/.emacs.d")))
-
+;; Allows us to copy a single line
 (defun copy-line ()
   "Copy current line in the kill ring"
   (interactive)
   (kill-ring-save (line-beginning-position)
                   (line-beginning-position 2))
   (message "Line copied"))
-
 (global-set-key (kbd "C-x l") 'copy-line)
 
+;; Uniquify, keeps buffer names unique
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "/")
@@ -70,13 +61,17 @@
 (global-set-key (kbd "M-[ 5 d") 'backward-word)
 (global-set-key (kbd "M-[ 5 c") 'forward-word)
 
+;; Make sure Super left and right go back and forth on the line
 (global-set-key (kbd "<s-left>") 'beginning-of-line)
 (global-set-key (kbd "<s-right>") 'end-of-line)
 
+;; Turn off autofill in html mode
 (add-hook 'html-mode-hook 'turn-off-auto-fill)
 
+;; Use html mode for html not the hlper
 (add-to-list 'auto-mode-alist '("\\.html\\'" . html-mode))
 
+;; All important tab settings
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 
@@ -90,52 +85,14 @@
 (define-key hah-key-map [C-home] 'beginning-of-buffer)
 (define-key hah-key-map [C-end] 'end-of-buffer)
 
+;; PHP Mode
 (load "php-mode.el")
-
-(if (load "mwheel" t)
-    (mwheel-install))
-
-;; turn on mouse wheel scrolling
-  (defun sd-mousewheel-scroll-up (event)
-    "Scroll window under mouse up by five lines."
-    (interactive "e")
-    (let ((current-window (selected-window)))
-      (unwind-protect
-          (progn 
-            (select-window (posn-window (event-start event)))
-            (scroll-up 2))
-        (select-window current-window))))
-  (defun sd-mousewheel-scroll-down (event)
-    "Scroll window under mouse down by five lines."
-    (interactive "e")
-    (let ((current-window (selected-window)))
-      (unwind-protect
-          (progn 
-            (select-window (posn-window (event-start event)))
-            (scroll-down 2))
-        (select-window current-window))))
- 
-  (global-set-key (kbd "<mouse-5>") 'sd-mousewheel-scroll-up)
-  (global-set-key (kbd "<mouse-4>") 'sd-mousewheel-scroll-down)
-
-(xterm-mouse-mode)
-
-(setq dotfiles-dir (file-name-directory (or (buffer-file-name) load-file-name)))
-
-;; (setq custom-file (concat dotfiles-dir "custom/" system-name ".el"))
-;; (setq per-machine-config-file (concat dotfiles-dir "config/per-machine/" system-name ".el"))
-
-;; (load custom-file 'noerror)
-
-;; (if (file-exists-p per-machine-config-file)
-;;     (load per-machine-config-file))
 
 ;; load buffer revert
 (load "revbufs.el")
-
 (global-set-key (kbd "A-r") 'revbufs)
 
-
+;; Some look and feel
 (setq default-frame-alist
       '((cursor-type . box)
         (vertical-scroll-bars . right)
@@ -155,15 +112,6 @@
         )
       )
 
-(add-to-list 'load-path "~/.emacs.d/src/emacs-color-theme-solarized/")
-(add-to-list 'custom-theme-load-path
-             "~/.emacs.d/src/emacs-color-theme-solarized")
-
-;(load-theme 'solarized-light t)
-
-;; (if (window-system) nil
-;;   (load-theme 'solarized-dark t)
-;;   )
 
 ;; Go mode
 (load "go-mode.el")
@@ -171,16 +119,14 @@
 ;; yaml mode
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-
 (add-hook 'yaml-mode-hook
      '(lambda ()
         (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
+;; Setup Meta for mac
 (setq mac-option-modifier 'meta)
 
-
-(add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
-
+;; Setup python modes
 (load-file "~/.emacs.d/emacs-for-python/epy-init.el") (require 'epy-setup)      ;; It will setup other loads, it is required!
 (require 'epy-python)     ;; If you want the python facilities [optional]
 (require 'epy-completion) ;; If you want the autocompletion settings [optional]
@@ -194,27 +140,24 @@
 (add-hook 'python-mode-hook
           (lambda () (define-key python-mode-map "\C-m" 'newline-and-indent))) ;;Newline and enter
 
+;; Really good Django Mode
+(require 'pony-mode)
+
+;; Highling indentation for ruby mode
 (add-hook 'ruby-mode-hook 'highlight-indentation)
 
-
-
-(add-to-list 'load-path "~/.emacs.d/magit/") ;; tell where to load the various files
+;; Better git support
 (require 'magit)
 
+;; Turn off gui stuff I don't need
 (tool-bar-mode -1)
 (setq-default cursor-type 'bar) 
 
+;; Turn off the bell
 (setq ring-bell-function 'ignore)
 
+;; Run emacs as server
 (server-start)
-
-(add-to-list 'load-path "~/.emacs.d/pony-mode/")
-(require 'pony-mode)
-
-;; Make unicode work in the terminal
-(defadvice ansi-term (after advise-ansi-term-coding-system)
-    (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
-(ad-activate 'ansi-term)
 
 ;; Better window switching
 (defun select-next-window ()
@@ -230,4 +173,11 @@
 (global-set-key (kbd "s-]") 'select-next-window)
 (global-set-key (kbd "s-[")  'select-previous-window)
 
-(require 'multi-term)
+;; Disable lock file
+(setq create-lockfiles nil)
+
+;; Store other files in temp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
