@@ -229,3 +229,5 @@
 
 (global-set-key (kbd "s-]") 'select-next-window)
 (global-set-key (kbd "s-[")  'select-previous-window)
+
+(require 'multi-term)
