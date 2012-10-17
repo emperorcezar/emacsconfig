@@ -5,6 +5,7 @@
 (add-to-list 'load-path "~/.emacs.d/pony-mode/")
 (add-to-list 'load-path "~/.emacs.d/multi-term/")
 (add-to-list 'load-path "~/.emacs.d/sr-speedbar/")
+(add-to-list 'load-path "~/.emacs.d/s/")
 
 ;; Setup Melpa Package Archive
 (require 'package)
@@ -185,5 +186,8 @@
 
 ;; Add the speed bar
 (require 'sr-speedbar)
-(setq 'sr-speedbar-right-side nil)
+(setq sr-speedbar-right-side nil)
 (global-set-key (kbd "s-s") 'sr-speedbar-toggle)
+
+;; Project management
+(require 'projectile)
