@@ -191,3 +191,6 @@
 
 ;; Project management
 (require 'projectile)
+
+;; Desktop Menu
+(require 'desktop-menu)
