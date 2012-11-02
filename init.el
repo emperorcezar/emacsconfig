@@ -1,17 +1,33 @@
-;; set load-path to site-lisp
-(setq load-path (cons "~/.emacs.d" load-path))
-(add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
-(add-to-list 'load-path "~/.emacs.d/magit/") ;; tell where to load the various files
-(add-to-list 'load-path "~/.emacs.d/pony-mode/")
-(add-to-list 'load-path "~/.emacs.d/multi-term/")
-(add-to-list 'load-path "~/.emacs.d/sr-speedbar/")
-(add-to-list 'load-path "~/.emacs.d/s/")
+;; Disable splash screen and startup message
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
 
-;; Setup Melpa Package Archive
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-(package-initialize)
-(setq package-user-dir "~/.emacs.d/elpa")
+;; Some look and feel
+(setq default-frame-alist
+      '((cursor-type . box)
+        (vertical-scroll-bars . right)
+        (internal-border-width . 0)
+        (modeline . t)
+        (fringe)
+        (mouse-color . "black")
+        (cursor-color . "Red")
+        (background-mode . light)
+        (tool-bar-lines . 1)
+        (menu-bar-lines . 1)
+        (right-fringe . 12)
+        (left-fringe . 4)
+        (background-color . "#fcf4dc")
+        (foreground-color . "Black")
+        (font-backend ns)
+        )
+      )
+
+;; Turn off gui stuff I don't need
+(tool-bar-mode -1)
+(setq-default cursor-type 'bar) 
+
+;; Turn off the bell
+(setq ring-bell-function 'ignore)
 
 ;; Set our prefered font
 (set-default-font "Source Code Pro-14")
@@ -21,13 +37,29 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 
+;; set load-path to site-lisp
+(setq load-path (cons "~/.emacs.d" load-path))
+(add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
+(add-to-list 'load-path "~/.emacs.d/magit/") ;; tell where to load the various files
+(add-to-list 'load-path "~/.emacs.d/pony-mode/")
+(add-to-list 'load-path "~/.emacs.d/multi-term/")
+(add-to-list 'load-path "~/.emacs.d/sr-speedbar/")
+(add-to-list 'load-path "~/.emacs.d/s/")
+(add-to-list 'load-path "~/.emacs.d/bookmark-plus/")
+(add-to-list 'load-path "~/.emacs.d/flycheck/")
+
+;; Setup Melpa Package Archive
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(package-initialize)
+(setq package-user-dir "~/.emacs.d/elpa")
+
 ;; ido
 (require 'ido)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-file-extensions-order '(".py" ".html" ".emacs"))
 (ido-mode 1)
-
 
 ;; less mode
 (load "less-css-mode.el")
@@ -40,10 +72,6 @@
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
-
-;; Disable splash screen and startup message
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
 
 ;; Allows us to copy a single line
 (defun copy-line ()
@@ -94,27 +122,6 @@
 (load "revbufs.el")
 (global-set-key (kbd "A-r") 'revbufs)
 
-;; Some look and feel
-(setq default-frame-alist
-      '((cursor-type . box)
-        (vertical-scroll-bars . right)
-        (internal-border-width . 0)
-        (modeline . t)
-        (fringe)
-        (mouse-color . "black")
-        (cursor-color . "Red")
-        (background-mode . light)
-        (tool-bar-lines . 1)
-        (menu-bar-lines . 1)
-        (right-fringe . 12)
-        (left-fringe . 4)
-        (background-color . "#fcf4dc")
-        (foreground-color . "Black")
-        (font-backend ns)
-        )
-      )
-
-
 ;; Go mode
 (load "go-mode.el")
 
@@ -151,13 +158,6 @@
 ;; Better git support
 (require 'magit)
 
-;; Turn off gui stuff I don't need
-(tool-bar-mode -1)
-(setq-default cursor-type 'bar) 
-
-;; Turn off the bell
-(setq ring-bell-function 'ignore)
-
 ;; Run emacs as server
 (server-start)
 
@@ -192,5 +192,24 @@
 ;; Project management
 (require 'projectile)
 
-;; Desktop Menu
-(require 'desktop-menu)
+;; Bookmark+
+(require 'bookmark+)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+(defadvice ansi-term (after advise-ansi-term-coding-system)
+    (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
+(ad-activate 'ansi-term)
+(put 'downcase-region 'disabled nil)
