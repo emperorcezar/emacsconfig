@@ -40,19 +40,20 @@
 ;; set load-path to site-lisp
 (setq load-path (cons "~/.emacs.d" load-path))
 (add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
-(add-to-list 'load-path "~/.emacs.d/magit/") ;; tell where to load the various files
-(add-to-list 'load-path "~/.emacs.d/pony-mode/")
-(add-to-list 'load-path "~/.emacs.d/multi-term/")
-(add-to-list 'load-path "~/.emacs.d/sr-speedbar/")
-(add-to-list 'load-path "~/.emacs.d/s/")
-(add-to-list 'load-path "~/.emacs.d/bookmark-plus/")
-(add-to-list 'load-path "~/.emacs.d/flycheck/")
 
 ;; Setup Melpa Package Archive
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-(package-initialize)
 (setq package-user-dir "~/.emacs.d/elpa")
+
+(package-initialize)
+;; check if the packages is installed; if not, install it.
+(mapc
+ (lambda (package)
+   (or (package-installed-p package)
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package)) 
+           (package-install package))))
+ '(magit pony-mode multi-term sr-speedbar bookmark+))
 
 ;; ido
 (require 'ido)
