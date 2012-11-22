@@ -53,7 +53,9 @@
    (or (package-installed-p package)
        (if (y-or-n-p (format "Package %s is missing. Install it? " package)) 
            (package-install package))))
- '(magit pony-mode multi-term sr-speedbar bookmark+))
+ '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters))
+
+(global-rainbow-delimiters-mode)
 
 ;; ido
 (require 'ido)
