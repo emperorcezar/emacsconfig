@@ -233,3 +233,8 @@
 (global-set-key (kbd "C-c p t") 'project-tags)
 
 (load "~/.emacs_projects.el")
+
+;; Pop up of killring
+(global-set-key "\C-cy" '(lambda ()
+   (interactive)
+   (popup-menu 'yank-menu)))
