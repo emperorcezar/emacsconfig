@@ -53,7 +53,14 @@
    (or (package-installed-p package)
        (if (y-or-n-p (format "Package %s is missing. Install it? " package)) 
            (package-install package))))
- '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters))
+ '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb))
+
+(add-hook 'ibuffer-hook
+    (lambda ()
+      (ibuffer-vc-set-filter-groups-by-vc-root)
+      (unless (eq ibuffer-sorting-mode 'alphabetic)
+        (ibuffer-do-sort-by-alphabetic))))
+
 
 (global-rainbow-delimiters-mode)
 
@@ -192,9 +199,6 @@
 (setq sr-speedbar-right-side nil)
 (global-set-key (kbd "s-s") 'sr-speedbar-toggle)
 
-;; Project management
-(require 'projectile)
-
 ;; Bookmark+
 (require 'bookmark+)
 (custom-set-variables
@@ -202,7 +206,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks"))
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(ecb-options-version "2.40"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -216,23 +221,6 @@
     (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
 (ad-activate 'ansi-term)
 (put 'downcase-region 'disabled nil)
-
-;; Projects
-(require 'mk-project)
-(global-set-key (kbd "C-c p c") 'project-compile)
-(global-set-key (kbd "C-c p l") 'project-load)
-(global-set-key (kbd "C-c p a") 'project-ack)
-(global-set-key (kbd "C-c p g") 'project-grep)
-(global-set-key (kbd "C-c p o") 'project-multi-occur)
-(global-set-key (kbd "C-c p u") 'project-unload)
-(global-set-key (kbd "C-c p f") 'project-find-file) ; or project-find-file-ido
-(global-set-key (kbd "C-c p i") 'project-index)
-(global-set-key (kbd "C-c p s") 'project-status)
-(global-set-key (kbd "C-c p h") 'project-home)
-(global-set-key (kbd "C-c p d") 'project-dired)
-(global-set-key (kbd "C-c p t") 'project-tags)
-
-(load "~/.emacs_projects.el")
 
 ;; Pop up of killring
 (global-set-key "\C-cy" '(lambda ()
