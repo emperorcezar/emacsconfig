@@ -37,6 +37,13 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 
+;; make it arrange by repo
+(add-hook 'ibuffer-hook
+    (lambda ()
+      (ibuffer-vc-set-filter-groups-by-vc-root)
+      (unless (eq ibuffer-sorting-mode 'alphabetic)
+        (ibuffer-do-sort-by-alphabetic))))
+
 ;; set load-path to site-lisp
 (setq load-path (cons "~/.emacs.d" load-path))
 (add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
