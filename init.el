@@ -195,9 +195,14 @@
 ;; Disable lock file
 (setq create-lockfiles nil)
 
-;; Store other files in temp dir
+;; Write backup files to own directory
 (setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory "backups")))))
+
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t)
+
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
