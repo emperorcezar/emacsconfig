@@ -72,17 +72,17 @@
 (global-rainbow-delimiters-mode)
 
 ;; ido
-(require 'ido)
+(autoload 'ido "ido" t)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-file-extensions-order '(".py" ".html" ".emacs"))
 (ido-mode 1)
 
 ;; less mode
-(load "less-css-mode.el")
+(autoload 'less-css-mode "less" t)
 
 ;; Completion
-(require 'completion)
+(autoload 'completion "completion" t)
 
 ;; recent files 
 (require 'recentf)
@@ -143,7 +143,7 @@
 (load "go-mode.el")
 
 ;; yaml mode
-(require 'yaml-mode)
+(autoload 'yaml-mode "yaml" t)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-hook 'yaml-mode-hook
      '(lambda ()
@@ -154,12 +154,11 @@
 
 ;; Setup python modes
 (load-file "~/.emacs.d/emacs-for-python/epy-init.el") (require 'epy-setup)      ;; It will setup other loads, it is required!
-(require 'epy-python)     ;; If you want the python facilities [optional]
-(require 'epy-completion) ;; If you want the autocompletion settings [optional]
-(require 'epy-editing)    ;; For configurations related to editing [optional]
-(require 'epy-bindings)   ;; For my suggested keybindings [optional]
-(require 'epy-nose)       ;; For nose integration
-(require 'highlight-indentation)
+(autoload 'epy-python "epy-python" t)     ;; If you want the python facilities [optional]
+(autoload 'epy-completion "epy-completion" t) ;; If you want the autocompletion settings [optional]
+(autoload 'epy-editing "epy-editing" t)    ;; For configurations related to editing [optional]
+(autoload 'epy-bindings "epy-bindings" t)   ;; For my suggested keybindings [optional]
+(autoload 'highlight-indentation "highlight-indentation" t)
 (epy-django-snippets)
 
 (add-hook 'python-mode-hook 'highlight-indentation)
@@ -207,12 +206,12 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; Add the speed bar
-(require 'sr-speedbar)
-(setq sr-speedbar-right-side nil)
+(autoload 'sr-speedbar "speedbar" t)
+(eval-after-load "speedbar" (setq sr-speedbar-right-side nil))
 (global-set-key (kbd "s-s") 'sr-speedbar-toggle)
 
 ;; Bookmark+
-(require 'bookmark+)
+(autoload 'bookmark+ "bookmark+" t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
