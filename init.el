@@ -132,6 +132,14 @@
 (define-key hah-key-map [C-home] 'beginning-of-buffer)
 (define-key hah-key-map [C-end] 'end-of-buffer)
 
+;; Powerline
+(require 'powerline)
+(setq powerline-arrow-shape 'curve)
+(custom-set-faces
+ '(mode-line ((t (:foreground "#eeeeee" :background "#bdbdbd" :box nil))))
+ '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
+(powerline-default-theme)
+
 ;; PHP Mode
 (load "php-mode.el")
 
