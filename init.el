@@ -136,7 +136,7 @@
 (require 'powerline)
 (setq powerline-arrow-shape 'curve)
 (custom-set-faces
- '(mode-line ((t (:foreground "#eeeeee" :background "#bdbdbd" :box nil))))
+ '(mode-line ((t (:foreground "#fefefe" :background "#888888" :box nil))))
  '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
 (powerline-default-theme)
 
