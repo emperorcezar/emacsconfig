@@ -245,3 +245,8 @@
 (global-set-key "\C-cy" '(lambda ()
    (interactive)
    (popup-menu 'yank-menu)))
+
+;; Search all buffers
+(defun search-all-buffers (regexp)
+   (interactive "sRegexp: ")
+   (multi-occur-in-matching-buffers "." regexp t))
