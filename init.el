@@ -250,3 +250,7 @@
 (defun search-all-buffers (regexp)
    (interactive "sRegexp: ")
    (multi-occur-in-matching-buffers "." regexp t))
+
+;; Automagically trim whitespace
+(setq-default show-trailing-whitespace t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
