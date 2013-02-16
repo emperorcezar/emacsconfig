@@ -24,7 +24,7 @@
 
 ;; Turn off gui stuff I don't need
 (tool-bar-mode -1)
-(setq-default cursor-type 'bar) 
+(setq-default cursor-type 'bar)
 
 ;; Turn off the bell
 (setq ring-bell-function 'ignore)
@@ -58,9 +58,9 @@
 (mapc
  (lambda (package)
    (or (package-installed-p package)
-       (if (y-or-n-p (format "Package %s is missing. Install it? " package)) 
+       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
            (package-install package))))
- '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb))
+ '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb git-gutter web-mode))
 
 (add-hook 'ibuffer-hook
     (lambda ()
@@ -84,7 +84,7 @@
 ;; Completion
 (autoload 'completion "completion" t)
 
-;; recent files 
+;; recent files
 (require 'recentf)
 (recentf-mode 1)
 (setq recentf-max-menu-items 25)
@@ -176,6 +176,21 @@
 ;; Really good Django Mode
 (require 'pony-mode)
 
+;; Web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(set-face-attribute 'web-mode-html-tag-face nil :foreground "Grey23")
+(set-face-attribute 'web-mode-html-attr-name-face nil :foreground "Navy")
+
+
+
 ;; Highling indentation for ruby mode
 (add-hook 'ruby-mode-hook 'highlight-indentation)
 
@@ -187,12 +202,12 @@
 
 ;; Better window switching
 (defun select-next-window ()
-  "Switch to the next window" 
+  "Switch to the next window"
   (interactive)
   (select-window (next-window)))
 
 (defun select-previous-window ()
-  "Switch to the previous window" 
+  "Switch to the previous window"
   (interactive)
   (select-window (previous-window)))
 
@@ -254,3 +269,6 @@
 ;; Automagically trim whitespace
 (setq-default show-trailing-whitespace t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Turn on git-gutter https://github.com/syohex/emacs-git-gutter/
+(global-git-gutter-mode t)
