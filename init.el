@@ -268,3 +268,8 @@
 
 ;; Turn on git-gutter https://github.com/syohex/emacs-git-gutter/
 (global-git-gutter-mode t)
+
+;; Turn off {} matchin in web-mode, it will do it for us.
+(add-hook 'web-mode-hook
+          (lambda ()
+            (local-set-key "{" 'self-insert-command)))
