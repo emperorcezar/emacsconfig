@@ -162,10 +162,6 @@
 
 ;; Setup python modes
 (load-file "~/.emacs.d/emacs-for-python/epy-init.el") (require 'epy-setup)      ;; It will setup other loads, it is required!
-(autoload 'epy-python "epy-python" t)     ;; If you want the python facilities [optional]
-(autoload 'epy-completion "epy-completion" t) ;; If you want the autocompletion settings [optional]
-(autoload 'epy-editing "epy-editing" t)    ;; For configurations related to editing [optional]
-(autoload 'epy-bindings "epy-bindings" t)   ;; For my suggested keybindings [optional]
 (autoload 'highlight-indentation "highlight-indentation" t)
 (epy-django-snippets)
 
