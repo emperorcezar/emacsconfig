@@ -157,10 +157,23 @@
      '(lambda ()
         (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
-;; Setup Meta for mac
-(setq mac-option-modifier 'meta)
+;; key bindings for mac
+(when (eq system-type 'darwin) ;; mac specific settings
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'super)
+  (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+  (global-set-key [(super a)] 'mark-whole-buffer)
+  (global-set-key [(super v)] 'yank)
+  (global-set-key [(super c)] 'kill-ring-save)
+  (global-set-key [(super s)] 'save-buffer)
+  (global-set-key [(super l)] 'goto-line)
+  (global-set-key [(super w)]
+                  (lambda () (interactive) (delete-window)))
+  (global-set-key [(super z)] 'undo)
+  )
 
-;; Setup python modes
+
+;; setup python modes
 (load-file "~/.emacs.d/emacs-for-python/epy-init.el") (require 'epy-setup)      ;; It will setup other loads, it is required!
 (autoload 'highlight-indentation "highlight-indentation" t)
 (epy-django-snippets)
