@@ -37,6 +37,12 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 30 30 :left :elide) " "
+              (mode 16 16 :left :elide) " " filename-and-process)
+        (mark " " (name 16 -1) " " filename)))
+
 ;; make it arrange by repo
 (add-hook 'ibuffer-hook
     (lambda ()
