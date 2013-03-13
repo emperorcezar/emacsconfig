@@ -145,7 +145,7 @@
 
 ;; load buffer revert
 (load "revbufs.el")
-(global-set-key (kbd "A-r") 'revbufs)
+(global-set-key [(super r)] 'revbufs)
 
 ;; Go mode
 (load "go-mode.el")
