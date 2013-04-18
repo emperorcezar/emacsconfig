@@ -1,24 +1,17 @@
-;; Disable splash screen and startup message
+;;; init.el --- My settings
+
+;;; Code:
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
 ;; Some look and feel
 (setq default-frame-alist
-      '((cursor-type . box)
-        (vertical-scroll-bars . right)
-        (internal-border-width . 0)
-        (modeline . t)
-        (fringe)
-        (mouse-color . "black")
-        (cursor-color . "Red")
-        (background-mode . light)
-        (tool-bar-lines . 1)
-        (menu-bar-lines . 1)
+      '(
         (right-fringe . 12)
-        (left-fringe . 4)
-        (background-color . "#fcf4dc")
-        (foreground-color . "Black")
-        (font-backend ns)
+        (left-fringe . 12)
+        ;;(background-color . "#fcf4dc")
+        ;;(foreground-color . "Black")
+        ;;(font-backend ns)
         )
       )
 
@@ -30,7 +23,7 @@
 (setq ring-bell-function 'ignore)
 
 ;; Set our prefered font
-(set-default-font "Source Code Pro-14")
+(set-frame-font "Source Code Pro-14")
 (global-font-lock-mode 1)
 
 ;; ibuffer is a much better buffer switcher
@@ -66,7 +59,7 @@
    (or (package-installed-p package)
        (if (y-or-n-p (format "Package %s is missing. Install it? " package))
            (package-install package))))
- '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb git-gutter web-mode))
+ '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb git-gutter web-mode smex flycheck solarized-theme))
 
 (add-hook 'ibuffer-hook
     (lambda ()
@@ -78,11 +71,11 @@
 (global-rainbow-delimiters-mode)
 
 ;; ido
-(autoload 'ido "ido" t)
+(require 'ido)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-file-extensions-order '(".py" ".html" ".emacs"))
-(ido-mode 1)
+(ido-mode t)
 
 ;; less mode
 (autoload 'less-css-mode "less" t)
@@ -142,8 +135,12 @@
 (require 'powerline)
 (setq powerline-arrow-shape 'curve)
 (custom-set-faces
- '(mode-line ((t (:foreground "#fefefe" :background "#888888" :box nil))))
- '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(mode-line ((t (:foreground "#FF8CBA" :background "#ffffff" :box nil))))
+ '(mode-line-inactive ((t (:foreground "#cccccc" :background "#000000" :box nil)))))
 (powerline-default-theme)
 
 ;; PHP Mode
@@ -245,9 +242,16 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; Add the speed bar
-(autoload 'sr-speedbar "speedbar" t)
-(eval-after-load "speedbar" (setq sr-speedbar-right-side nil))
+(require 'sr-speedbar)
+(eval-after-load "sr-speedbar" (setq sr-speedbar-right-side nil))
 (global-set-key (kbd "s-s") 'sr-speedbar-toggle)
+
+(speedbar-add-supported-extension ".py")
+(add-to-list 'speedbar-fetch-etags-parse-list
+             '("\\.py" . speedbar-parse-c-or-c++tag))
+
+;; Highlight current line
+(global-hl-line-mode +1)
 
 ;; Bookmark+
 (autoload 'bookmark+ "bookmark+" t)
@@ -257,13 +261,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
- '(ecb-options-version "2.40"))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+ '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+ '(ecb-options-version "2.40")
+ '(ls-lisp-verbosity nil))
+
 
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
@@ -287,9 +288,23 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Turn on git-gutter https://github.com/syohex/emacs-git-gutter/
-(global-git-gutter-mode t)
+;; (global-git-gutter-mode t)
 
 ;; Turn off {} matchin in web-mode, it will do it for us.
 (add-hook 'web-mode-hook
           (lambda ()
             (local-set-key "{" 'self-insert-command)))
+
+;; Use emacs ls
+(require 'ls-lisp)
+(setq ls-lisp-use-insert-directory-program nil)
+
+
+;; smex
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+(provide 'init)
+;;; init.el ends here
