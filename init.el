@@ -48,17 +48,22 @@
 
 ;; Setup Melpa Package Archive
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(setq package-archives '(("elpa" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
 (setq package-user-dir "~/.emacs.d/elpa")
 
 (package-initialize)
+; fetch the list of packages available 
+(when (not package-archive-contents)
+  (package-refresh-contents))
 ;; check if the packages is installed; if not, install it.
 (mapc
  (lambda (package)
    (or (package-installed-p package)
        (if (y-or-n-p (format "Package %s is missing. Install it? " package))
            (package-install package))))
- '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb git-gutter web-mode smex flycheck solarized-theme elpy))
+ '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb git-gutter web-mode smex flycheck solarized-theme))
 
 (add-hook 'ibuffer-hook
     (lambda ()
