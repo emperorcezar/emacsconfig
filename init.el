@@ -18,6 +18,7 @@
 ;; Turn off gui stuff I don't need
 (tool-bar-mode -1)
 (setq-default cursor-type 'bar)
+(set-cursor-color "#ff0000")
 
 ;; Turn off the bell
 (setq ring-bell-function 'ignore)
