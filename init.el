@@ -175,14 +175,15 @@
   )
 
 
+(load-file "~/.emacs.d/emacs-for-python/epy-init.el")
+(epy-setup-checker "pyflakes %f")
+
 (autoload 'highlight-indentation "highlight-indentation" t)
 
 (add-hook 'python-mode-hook 'highlight-indentation)
 (add-hook 'python-mode-hook
           (lambda () (define-key python-mode-map "\C-m" 'newline-and-indent))) ;;Newline and enter
 
-;; Turn on elpy
-(elpy-enable)
 
 ;; Really good Django Mode
 (require 'pony-mode)
