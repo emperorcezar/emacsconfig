@@ -54,7 +54,7 @@
 (setq package-user-dir "~/.emacs.d/elpa")
 
 (package-initialize)
-; fetch the list of packages available 
+; fetch the list of packages available
 (when (not package-archive-contents)
   (package-refresh-contents))
 ;; check if the packages is installed; if not, install it.
@@ -137,7 +137,10 @@
 
 ;; Powerline
 (require 'powerline)
-(setq powerline-arrow-shape 'curve)
+(setq powerline-arrow-shape 'arrow)
+
+(load-theme 'solarized-light t)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -145,7 +148,7 @@
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:foreground "#FF8CBA" :background "#ffffff" :box nil))))
  '(mode-line-inactive ((t (:foreground "#cccccc" :background "#000000" :box nil)))))
-(powerline-default-theme)
+
 
 ;; PHP Mode
 (load "php-mode.el")
@@ -313,6 +316,8 @@
 
 ;; enable for all programming modes
 (add-hook 'prog-mode-hook 'subword-mode)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 (provide 'init)
 ;;; init.el ends here
