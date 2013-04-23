@@ -45,7 +45,6 @@
 
 ;; set load-path to site-lisp
 (setq load-path (cons "~/.emacs.d" load-path))
-(add-to-list 'load-path "~/.emacs.d/emacs-for-python/") ;; tell where to load the various files
 
 ;; Setup Melpa Package Archive
 (require 'package)
@@ -59,7 +58,7 @@
    (or (package-installed-p package)
        (if (y-or-n-p (format "Package %s is missing. Install it? " package))
            (package-install package))))
- '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb git-gutter web-mode smex flycheck solarized-theme))
+ '(magit pony-mode multi-term sr-speedbar bookmark+ rainbow-delimiters ibuffer-vc ecb git-gutter web-mode smex flycheck solarized-theme elpy))
 
 (add-hook 'ibuffer-hook
     (lambda ()
@@ -176,14 +175,14 @@
   )
 
 
-;; setup python modes
-(load-file "~/.emacs.d/emacs-for-python/epy-init.el") (require 'epy-setup)      ;; It will setup other loads, it is required!
 (autoload 'highlight-indentation "highlight-indentation" t)
-(epy-django-snippets)
 
 (add-hook 'python-mode-hook 'highlight-indentation)
 (add-hook 'python-mode-hook
           (lambda () (define-key python-mode-map "\C-m" 'newline-and-indent))) ;;Newline and enter
+
+;; Turn on elpy
+(elpy-enable)
 
 ;; Really good Django Mode
 (require 'pony-mode)
@@ -305,6 +304,9 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+;; enable for all programming modes
+(add-hook 'prog-mode-hook 'subword-mode)
 
 (provide 'init)
 ;;; init.el ends here
