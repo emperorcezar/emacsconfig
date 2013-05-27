@@ -1,4 +1,4 @@
-;;; init.el --- My settings
+;;; Commentary: init.el --- My settings
 
 ;;; Code:
 (setq inhibit-startup-message t)
@@ -18,7 +18,6 @@
 ;; Turn off gui stuff I don't need
 (tool-bar-mode -1)
 (setq-default cursor-type 'bar)
-(set-cursor-color "#ff0000")
 
 ;; Turn off the bell
 (setq ring-bell-function 'ignore)
@@ -141,6 +140,7 @@
 (setq powerline-arrow-shape 'arrow)
 
 (load-theme 'solarized-light t)
+(set-cursor-color "#ff0000")
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -192,6 +192,25 @@
 (add-hook 'python-mode-hook 'highlight-indentation)
 (add-hook 'python-mode-hook
           (lambda () (define-key python-mode-map "\C-m" 'newline-and-indent))) ;;Newline and enter
+
+(defun annotate-pdb ()
+  (interactive)
+  (highlight-lines-matching-regexp "import pdb")
+  (highlight-lines-matching-regexp "pdb.set_trace()"))
+
+(add-hook 'python-mode-hook 'annotate-pdb)
+
+(defun python-add-breakpoint ()
+  (interactive)
+  (newline-and-indent)
+  (insert "import ipdb; ipdb.set_trace()")
+  (newline-and-indent)
+  (highlight-lines-matching-regexp "^[ ]*import ipdb; ipdb.set_trace()"))
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-t") 'python-add-breakpoint)))
+
 
 
 ;; Really good Django Mode
@@ -271,6 +290,8 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+ '(ecb-layout-name "left9")
+ '(ecb-layout-window-sizes (quote (("left9" (ecb-methods-buffer-name 0.16033755274261605 . 0.9824561403508771)))))
  '(ecb-options-version "2.40")
  '(ls-lisp-verbosity nil))
 
@@ -318,7 +339,23 @@
 ;; enable for all programming modes
 (add-hook 'prog-mode-hook 'subword-mode)
 
+(setq flycheck-flake8-maximum-line-length 120)
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
+
+(global-linum-mode t)
+
+;; Text size
+(global-set-key (kbd "s--") 'text-scale-adjust)
+(global-set-key (kbd "s-+") 'text-scale-adjust)
+
+(global-set-key (kbd "'")  'skeleton-pair-insert-maybe)
+
+(global-ede-mode 1)
+(require 'semantic/sb)
+(semantic-mode 1)
+
+(ecb-activate)
 
 (provide 'init)
 ;;; init.el ends here
